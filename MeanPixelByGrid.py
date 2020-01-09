@@ -3,12 +3,13 @@ from PIL import Image, ImageStat
 
 image1 = Image.open(r'img.jpg')
 
-def mean_pixels(img, box_rows, box_columns, new_image_dimesions):
+
+def simplify_pixels(img, box_rows, box_columns, new_image_dimesions, median_or_mean):
 
 	'''
 	Description: 
 		This function will split the given image into a grid, then
-		take mean pixel color in each cell of the grid and create
+		take median or mean pixel color in each cell of the grid and create
 		a new image (at a given resolution) displaying the mean pixel 
 		color in each cell
 
@@ -17,6 +18,7 @@ def mean_pixels(img, box_rows, box_columns, new_image_dimesions):
 		box_rows(int): the number of cells in each row
 		bow_columns(int): the number of cells in each column
 		new_image_dimesions((int, int)): the dimesions of the new image
+		median_or_mean(String): median or mean
 
 	Output: 
 		This function outputs a new image
@@ -60,24 +62,31 @@ def mean_pixels(img, box_rows, box_columns, new_image_dimesions):
 		new_right = new_box_width
 
 		for row in range(0, box_rows):
-			
-			mean = ImageStat.Stat(img.crop((base_left, base_top, base_right, base_bottom))).mean
 
-			# rounds the mean rgb values
-			mean[0] = round(mean[0])
-			mean[1] = round(mean[1])
-			mean[2] = round(mean[2])
+			if median_or_mean == 'median':
+				med = ImageStat.Stat(img.crop((base_left, base_top, base_right, base_bottom))).median
+			elif median_or_mean == 'mean':
+				med = ImageStat.Stat(img.crop((base_left, base_top, base_right, base_bottom))).mean
 
-			new_image.paste((mean[0], mean[1], mean[2]) ,(new_left, new_top, new_right, new_bottom))			
+			# rounds the mean or median rgb values
+			med[0] = round(med[0])
+			med[1] = round(med[1])
+			med[2] = round(med[2])
+
+			new_image.paste((med[0], med[1], med[2]) ,(new_left, new_top, new_right, new_bottom))			
 
 			base_right += base_box_width 
 			base_left += base_box_width
 
 			new_right += new_box_width 
 			new_left += new_box_width
+
 	
 	new_image.show()
 
+
 iphone8_resolution = [750, 1334]
 laptop_resolution = [1920, 1080]
-mean_pixels(image1, 10, 10, image1.size)
+
+simplify_pixels(image1, 10, 10, laptop_resolution, 'median')
+
