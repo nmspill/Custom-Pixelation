@@ -1,9 +1,6 @@
 import math
 from PIL import Image, ImageStat
 
-image1 = Image.open(r'img.jpg') # the image's file path
-
-
 def simplify_pixels(img, box_rows, box_columns, new_image_dimesions, median_or_mean):
 
 	'''
@@ -87,6 +84,8 @@ def simplify_pixels(img, box_rows, box_columns, new_image_dimesions, median_or_m
 
 iphone8_resolution = [750, 1334]
 laptop_resolution = [1920, 1080]
+
+image1 = Image.open(r'img.jpg') # the image's file path
 
 simplify_pixels(image1, 10, 10, laptop_resolution, 'median')
 
