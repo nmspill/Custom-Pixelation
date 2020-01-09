@@ -1,7 +1,7 @@
 import math
 from PIL import Image, ImageStat
 
-image1 = Image.open(r'img.jpg')
+image1 = Image.open(r'img.jpg') # the image's file path
 
 
 def simplify_pixels(img, box_rows, box_columns, new_image_dimesions, median_or_mean):
