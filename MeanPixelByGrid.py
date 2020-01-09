@@ -5,6 +5,23 @@ image1 = Image.open(r'img.jpg')
 
 def mean_pixels(img, box_rows, box_columns, new_image_dimesions):
 
+	'''
+	Description: 
+		This function will split the given image into a grid, then
+		take mean pixel color in each cell of the grid and create
+		a new image (at a given resolution) displaying the mean pixel 
+		color in each cell
+
+	Args: 
+		img(Image): the base image
+		box_rows(int): the number of cells in each row
+		bow_columns(int): the number of cells in each column
+		new_image_dimesions((int, int)): the dimesions of the new image
+
+	Output: 
+		This function outputs a new image
+	'''
+
 	base_image_width = img.size[0] # width of the base image
 	base_image_height = img.size[1] # height of the base image
 	base_box_width = math.ceil(base_image_width / box_rows) # width of each box for the base image
@@ -58,9 +75,9 @@ def mean_pixels(img, box_rows, box_columns, new_image_dimesions):
 
 			new_right += new_box_width 
 			new_left += new_box_width
+	
+	new_image.show()
 
 iphone8_resolution = [750, 1334]
 laptop_resolution = [1920, 1080]
-mean_pixels(image1, 5, 10, iphone8_resolution)
-
-
+mean_pixels(image1, 10, 10, image1.size)
